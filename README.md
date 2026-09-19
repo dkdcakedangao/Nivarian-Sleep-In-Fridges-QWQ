@@ -7,7 +7,7 @@
 
 该模组为“涅瓦莲”种族的一个附属mod，旨在让涅瓦莲可以睡在大部分模组的冰箱里头
 你可以通过访问：
-[Github][https://github.com/dkdcakedangao/Nivarian-Icecream-Tail-QWQ](https://github.com/dkdcakedangao/Nivarian-Sleep-In-Fridges-QWQ)
+[Github][https://github.com/dkdcakedangao/Nivarian-Sleep-In-Fridges-QWQ](https://github.com/dkdcakedangao/Nivarian-Sleep-In-Fridges-QWQ)
 来获取该模组的所有开源代码。
 
 如果发现任何问题、或有任何意见、想法，都可以在涅瓦莲的官方qq群找到我，并向我提出。
