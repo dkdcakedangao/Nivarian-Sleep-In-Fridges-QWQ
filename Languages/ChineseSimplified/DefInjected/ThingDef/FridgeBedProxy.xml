@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 隐形冰龙窝的名儿 -->
+<LanguageData>
+  <NSIF_FridgeBedProxySingleCell.label>冰箱中的冰龙小窝</NSIF_FridgeBedProxySingleCell.label>
+  <NSIF_FridgeBedProxySingleCell.description>藏在冰箱里头的冰龙小窝。</NSIF_FridgeBedProxySingleCell.description>
+  <NSIF_FridgeBedProxySingle.label>冰箱中的冰龙小窝</NSIF_FridgeBedProxySingle.label>
+  <NSIF_FridgeBedProxySingle.description>藏在冰箱里头的冰龙小窝。</NSIF_FridgeBedProxySingle.description>
+  <NSIF_FridgeBedProxyDouble.label>冰箱中的冰龙小窝</NSIF_FridgeBedProxyDouble.label>
+  <NSIF_FridgeBedProxyDouble.description>藏在冰箱里头的冰龙小窝。</NSIF_FridgeBedProxyDouble.description>
+</LanguageData>

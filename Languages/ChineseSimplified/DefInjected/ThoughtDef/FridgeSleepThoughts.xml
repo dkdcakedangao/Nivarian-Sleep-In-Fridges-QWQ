@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 心情的定义、描述啥的 -->
+<LanguageData>
+  <NSIF_SpaceSingleTiny.stages.0.label>小小的冰箱窝喵</NSIF_SpaceSingleTiny.stages.0.label>
+  <NSIF_SpaceSingleTiny.stages.0.description>虽然非常小，但是凉凉的睡得很舒服~</NSIF_SpaceSingleTiny.stages.0.description>
+  <NSIF_SpaceSingleComfortable.stages.0.label>非常舒服的冰箱窝喵</NSIF_SpaceSingleComfortable.stages.0.label>
+  <NSIF_SpaceSingleComfortable.stages.0.description>凉凉的~睡得很舒服~</NSIF_SpaceSingleComfortable.stages.0.description>
+  <NSIF_SpaceSingleLarge.stages.0.label>好大的床（冰箱）喵</NSIF_SpaceSingleLarge.stages.0.label>
+  <NSIF_SpaceSingleLarge.stages.0.description>尾巴可以随便甩~</NSIF_SpaceSingleLarge.stages.0.description>
+  <NSIF_SpaceDoubleJustRight.stages.0.label>刚刚好的冰箱窝喵</NSIF_SpaceDoubleJustRight.stages.0.label>
+  <NSIF_SpaceDoubleJustRight.stages.0.description>两个人刚刚好~</NSIF_SpaceDoubleJustRight.stages.0.description>
+  <NSIF_SpaceDoubleLarge.stages.0.label>好大的床（冰箱）喵</NSIF_SpaceDoubleLarge.stages.0.label>
+  <NSIF_SpaceDoubleLarge.stages.0.description>就算是两个人，也睡得很舒服~</NSIF_SpaceDoubleLarge.stages.0.description>
+  <NSIF_SleepDisturbed.stages.0.label>睡眠被打扰了喵……</NSIF_SleepDisturbed.stages.0.label>
+  <NSIF_SleepDisturbed.stages.0.description>虽然睡得很舒服，但总有人来打扰我……</NSIF_SleepDisturbed.stages.0.description>
+  <NSIF_CuteDragonInFridge.stages.0.label>冰箱里头塞了个可爱冰龙</NSIF_CuteDragonInFridge.stages.0.label>
+  <NSIF_CuteDragonInFridge.stages.0.description>可爱捏~</NSIF_CuteDragonInFridge.stages.0.description>
+</LanguageData>

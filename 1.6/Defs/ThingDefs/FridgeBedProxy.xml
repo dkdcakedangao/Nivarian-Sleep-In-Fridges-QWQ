@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="SleepingSpotBase" Name="NSIF_FridgeBedProxyBase" Abstract="True">
+    <label>ice dragon nest inside the refrigerator</label>
+    <description>An internal ice dragon nest managed by a refrigerator.</description>
+    <thingClass>NivarianSleepInFridges.Building_FridgeBedProxy</thingClass>
+    <drawerType>None</drawerType>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
+    <selectable>false</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <designationCategory IsNull="True"/>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <Comfort>1.0</Comfort>
+      <BedRestEffectiveness>1.4</BedRestEffectiveness>
+      <ImmunityGainSpeedFactor>1.8</ImmunityGainSpeedFactor>
+      <SurgerySuccessChanceFactor>1.4</SurgerySuccessChanceFactor>
+      <MedicalTendQualityOffset>0.10</MedicalTendQualityOffset>
+    </statBases>
+    <building>
+      <isEdifice>false</isEdifice>
+      <bed_canBeMedical>true</bed_canBeMedical>
+    </building>
+    <comps Inherit="False">
+      <li Class="CompProperties_AssignableToPawn">
+        <drawAssignmentOverlay>false</drawAssignmentOverlay>
+        <compClass>NivarianSleepInFridges.CompAssignableToPawn_FridgeBed</compClass>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="NSIF_FridgeBedProxyBase">
+    <defName>NSIF_FridgeBedProxySingleCell</defName>
+    <size>(1,1)</size>
+    <building>
+      <bed_showSleeperBody>true</bed_showSleeperBody>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="NSIF_FridgeBedProxyBase">
+    <defName>NSIF_FridgeBedProxySingle</defName>
+    <size>(1,2)</size>
+    <building>
+      <bed_showSleeperBody>true</bed_showSleeperBody>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="NSIF_FridgeBedProxyBase">
+    <defName>NSIF_FridgeBedProxyDouble</defName>
+    <size>(2,2)</size>
+    <building>
+      <bed_showSleeperBody>true</bed_showSleeperBody>
+    </building>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,52 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>5</LangVersion>
+    <OutputType>Library</OutputType>
+    <AssemblyName>NivarianSleepInFridges</AssemblyName>
+    <OutputPath>$(MSBuildProjectDirectory)\..\1.6\Assemblies\</OutputPath>
+    <IntermediateAssembly>$(MSBuildProjectDirectory)\obj\$(Configuration)\$(AssemblyName).dll</IntermediateAssembly>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <Target Name="ValidateGameReferences" BeforeTargets="CoreCompile">
+    <Error Condition="'$(RimWorldManagedDir)' == ''" Text="Set RimWorldManagedDir to RimWorldWin64_Data\Managed." />
+    <Error Condition="'$(HarmonyAssemblyPath)' == ''" Text="Set HarmonyAssemblyPath to 0Harmony.dll." />
+    <Error Condition="'$(AlienRaceAssemblyPath)' == ''" Text="Set AlienRaceAssemblyPath to AlienRace.dll." />
+    <Error Condition="'$(NivarianRaceAssemblyPath)' == ''" Text="Set NivarianRaceAssemblyPath to Nivarian_Race.dll." />
+  </Target>
+
+  <ItemGroup>
+    <Compile Include="Buildings\Building_FridgeBedProxy.cs" />
+    <Compile Include="Comps\CompFridgeSleep.cs" />
+    <Compile Include="Core\FridgeBedLayout.cs" />
+    <Compile Include="Core\FridgeCapacityUtility.cs" />
+    <Compile Include="Core\FridgeDefBootstrap.cs" />
+    <Compile Include="Core\FridgeIcyCoreUtility.cs" />
+    <Compile Include="Core\IcecreamTailCompatibility.cs" />
+    <Compile Include="Core\FridgeSleepUtility.cs" />
+    <Compile Include="Core\FridgeMoodUtility.cs" />
+    <Compile Include="Core\SleepInFridgesMod.cs" />
+    <Compile Include="Patches\GenSpawnPatches.cs" />
+    <Compile Include="Patches\PawnDrawPatches.cs" />
+    <Compile Include="Patches\RestUtilityPatches.cs" />
+    <Compile Include="Patches\StorageCapacityPatches.cs" />
+    <Compile Include="Patches\StorageInteractionPatches.cs" />
+    <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.CoreModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.IMGUIModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\UnityEngine.TextRenderingModule.dll" />
+    <GameReference Include="$(RimWorldManagedDir)\netstandard.dll" />
+    <GameReference Include="$(HarmonyAssemblyPath)" />
+    <GameReference Include="$(AlienRaceAssemblyPath)" />
+    <GameReference Include="$(NivarianRaceAssemblyPath)" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CoreCompile" DependsOnTargets="ValidateGameReferences">
+    <Csc Sources="@(Compile)" References="@(GameReference)" TargetType="library" OutputAssembly="$(IntermediateAssembly)" DebugType="$(DebugType)" />
+  </Target>
+</Project>

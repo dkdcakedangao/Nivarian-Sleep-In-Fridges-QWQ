@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- mod setting -->
+<LanguageData>
+  <NSIF_SettingsCategory>Nivarian Sleep In Fridges</NSIF_SettingsCategory>
+  <NSIF_MasterSwitch>Enable refrigerator sleeping</NSIF_MasterSwitch>
+  <NSIF_MasterSwitchDesc>Master switch for all refrigerator beds. Per-refrigerator choices are preserved while disabled.</NSIF_MasterSwitchDesc>
+  <NSIF_IcyCoreRecovery>Enable Icy Core recovery</NSIF_IcyCoreRecovery>
+  <NSIF_IcyCoreRecoveryDesc>Nivarians resting in a powered refrigerator bed recover Icy Core at the base rate of a Nivarian bed.</NSIF_IcyCoreRecoveryDesc>
+  <NSIF_IcecreamTailRecoveryBoost>Accelerate Icecream Tail recovery</NSIF_IcecreamTailRecoveryBoost>
+  <NSIF_IcecreamTailRecoveryBoostDesc>Nivarians resting in a powered refrigerator bed recover an immature Icecream Tail faster. Requires the Icecream Tail mod.</NSIF_IcecreamTailRecoveryBoostDesc>
+  <NSIF_IcecreamTailRecoveryMultiplier>Icecream Tail recovery speed: {0}×</NSIF_IcecreamTailRecoveryMultiplier>
+  <NSIF_CapacityReduction>Refrigerator beds use storage capacity</NSIF_CapacityReduction>
+  <NSIF_CapacityReductionDesc>Reduce refrigerator capacity while its bed is enabled. Disable this to make all refrigerator beds use no storage capacity.</NSIF_CapacityReductionDesc>
+  <NSIF_SingleBedMaximumReduction>Single bed maximum capacity reduction: {0}</NSIF_SingleBedMaximumReduction>
+  <NSIF_SingleBedMaximumReductionDesc>A single refrigerator bed still halves capacity, but cannot reduce it by more than this value. Set this to 0 to use no capacity.</NSIF_SingleBedMaximumReductionDesc>
+  <NSIF_DoubleBedMaximumReduction>Double bed maximum capacity reduction: {0}</NSIF_DoubleBedMaximumReduction>
+  <NSIF_DoubleBedMaximumReductionDesc>A double refrigerator bed still halves capacity, but cannot reduce it by more than this value. Set this to 0 to use no capacity.</NSIF_DoubleBedMaximumReductionDesc>
+  <NSIF_AllowSleeping>THIS IS A BED!</NSIF_AllowSleeping>
+  <NSIF_AllowSleepingDesc>Allow colonist Nivarians to use this refrigerator as a bed.</NSIF_AllowSleepingDesc>
+  <NSIF_MasterSwitchDisabled>Refrigerator sleeping is disabled in mod settings.</NSIF_MasterSwitchDisabled>
+  <NSIF_OnlyNivarianColonists>Only colonist Nivarians can sleep here.</NSIF_OnlyNivarianColonists>
+  <NSIF_InteractionMood>Enable storage interaction thoughts</NSIF_InteractionMood>
+  <NSIF_InteractionMoodDesc>Storing or taking items affects the sleeper and the interacting pawn while a Nivarian sleeps inside.</NSIF_InteractionMoodDesc>
+  <NSIF_SleepMood>Enable refrigerator sleeping thoughts</NSIF_SleepMood>
+  <NSIF_SleepMoodDesc>Nivarians sleeping in a refrigerator bed gain an additional thought based on its available space.</NSIF_SleepMoodDesc>
+  <NSIF_SettingsPageGeneral>General</NSIF_SettingsPageGeneral>
+  <NSIF_SettingsPageMood>Thoughts</NSIF_SettingsPageMood>
+  <NSIF_ResetDefaults>Reset all settings to defaults</NSIF_ResetDefaults>
+</LanguageData>

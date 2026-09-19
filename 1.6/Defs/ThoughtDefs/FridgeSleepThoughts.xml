@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThoughtDef>
+    <defName>NSIF_SpaceSingleTiny</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>tiny refrigerator nest, meow</label>
+        <description>It is very small, but cool and comfortable to sleep in~</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NSIF_SpaceSingleComfortable</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>very comfortable refrigerator nest, meow</label>
+        <description>Cool~ It was very comfortable to sleep in~</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NSIF_SpaceSingleLarge</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>such a big bed (refrigerator), meow</label>
+        <description>I can swish my tail around as much as I like~</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NSIF_SpaceDoubleJustRight</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>just-right refrigerator nest, meow</label>
+        <description>Just right for two people~</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NSIF_SpaceDoubleLarge</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>such a big bed (refrigerator), meow</label>
+        <description>Even with two people, it is very comfortable to sleep in~</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NSIF_SleepDisturbed</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.04166667</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>my sleep was disturbed, meow...</label>
+        <description>It is very comfortable, but someone always comes to disturb my sleep...</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>NSIF_CuteDragonInFridge</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.16666667</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>a cute ice dragon is tucked inside the refrigerator</label>
+        <description>So cute~</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

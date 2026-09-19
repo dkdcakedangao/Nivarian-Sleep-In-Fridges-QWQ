@@ -1,0 +1,5 @@
+/Source/bin/
+/Source/obj/
+/log.txt
+*.user
+*.suo

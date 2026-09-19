@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Labels and descriptions for Fridge sleep thoughts. -->
+<LanguageData>
+  <NSIF_SpaceSingleTiny.stages.0.label>tiny Fridge nest, meow~</NSIF_SpaceSingleTiny.stages.0.label>
+  <NSIF_SpaceSingleTiny.stages.0.description>It may be tiny, but it is cool and so comfy to sleep in~</NSIF_SpaceSingleTiny.stages.0.description>
+  <NSIF_SpaceSingleComfortable.stages.0.label>super-comfy Fridge nest, meow~</NSIF_SpaceSingleComfortable.stages.0.label>
+  <NSIF_SpaceSingleComfortable.stages.0.description>So cool~ I slept so comfortably~</NSIF_SpaceSingleComfortable.stages.0.description>
+  <NSIF_SpaceSingleLarge.stages.0.label>such a big bed (Fridge), meow~</NSIF_SpaceSingleLarge.stages.0.label>
+  <NSIF_SpaceSingleLarge.stages.0.description>I can swish my tail as much as I want~</NSIF_SpaceSingleLarge.stages.0.description>
+  <NSIF_SpaceDoubleJustRight.stages.0.label>just-right Fridge nest, meow~</NSIF_SpaceDoubleJustRight.stages.0.label>
+  <NSIF_SpaceDoubleJustRight.stages.0.description>Just right for the two of us~</NSIF_SpaceDoubleJustRight.stages.0.description>
+  <NSIF_SpaceDoubleLarge.stages.0.label>such a big bed (Fridge), meow~</NSIF_SpaceDoubleLarge.stages.0.label>
+  <NSIF_SpaceDoubleLarge.stages.0.description>Even with two of us, it is still so comfortable~</NSIF_SpaceDoubleLarge.stages.0.description>
+  <NSIF_SleepDisturbed.stages.0.label>my sleep was disturbed, meow...</NSIF_SleepDisturbed.stages.0.label>
+  <NSIF_SleepDisturbed.stages.0.description>It is so comfortable in here, but someone always comes along and disturbs my sleep...</NSIF_SleepDisturbed.stages.0.description>
+  <NSIF_CuteDragonInFridge.stages.0.label>a cute Nivarian stuffed into the Fridge</NSIF_CuteDragonInFridge.stages.0.label>
+  <NSIF_CuteDragonInFridge.stages.0.description>So cute~</NSIF_CuteDragonInFridge.stages.0.description>
+</LanguageData>

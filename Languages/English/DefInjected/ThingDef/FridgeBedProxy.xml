@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Names and descriptions for the invisible Nivarian beds. -->
+<LanguageData>
+  <NSIF_FridgeBedProxySingleCell.label>Nivarian nest in the Fridge</NSIF_FridgeBedProxySingleCell.label>
+  <NSIF_FridgeBedProxySingleCell.description>A little Nivarian nest tucked away inside the Fridge.</NSIF_FridgeBedProxySingleCell.description>
+  <NSIF_FridgeBedProxySingle.label>Nivarian nest in the Fridge</NSIF_FridgeBedProxySingle.label>
+  <NSIF_FridgeBedProxySingle.description>A little Nivarian nest tucked away inside the Fridge.</NSIF_FridgeBedProxySingle.description>
+  <NSIF_FridgeBedProxyDouble.label>Nivarian nest in the Fridge</NSIF_FridgeBedProxyDouble.label>
+  <NSIF_FridgeBedProxyDouble.description>A little Nivarian nest tucked away inside the Fridge.</NSIF_FridgeBedProxyDouble.description>
+</LanguageData>

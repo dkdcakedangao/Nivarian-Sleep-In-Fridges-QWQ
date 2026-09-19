@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- mod选项的 -->
+<LanguageData>
+  <NSIF_SettingsCategory>涅瓦莲当然可以！睡冰箱！</NSIF_SettingsCategory>
+  <NSIF_MasterSwitch>启用冰箱睡眠</NSIF_MasterSwitch>
+  <NSIF_MasterSwitchDesc>控制全部冰箱的床位总开关。</NSIF_MasterSwitchDesc>
+  <NSIF_IcyCoreRecovery>启用冰核恢复</NSIF_IcyCoreRecovery>
+  <NSIF_IcyCoreRecoveryDesc>涅瓦莲在通电冰箱的床位上休息时，会快速恢复冰核。</NSIF_IcyCoreRecoveryDesc>
+  <NSIF_IcecreamTailRecoveryBoost>加速冰淇淋尾巴恢复</NSIF_IcecreamTailRecoveryBoost>
+  <NSIF_IcecreamTailRecoveryBoostDesc>涅瓦莲在通电冰箱的床位上休息时，加快未成熟冰淇淋尾巴的恢复速度。需要启用冰淇淋尾巴模组。</NSIF_IcecreamTailRecoveryBoostDesc>
+  <NSIF_IcecreamTailRecoveryMultiplier>冰淇淋尾巴恢复速度：{0}×</NSIF_IcecreamTailRecoveryMultiplier>
+  <NSIF_CapacityReduction>睡冰箱会占用容量</NSIF_CapacityReduction>
+  <NSIF_CapacityReductionDesc>启用冰箱床时，会减少冰箱容量；关闭后所有冰箱床均不再会占用容量。</NSIF_CapacityReductionDesc>
+  <NSIF_SingleBedMaximumReduction>单人床最多减少容量：{0}</NSIF_SingleBedMaximumReduction>
+  <NSIF_SingleBedMaximumReductionDesc>单人冰箱会使容量减半，但减少量不会超过此数值。设为 0 时，单人床不会占用容量。</NSIF_SingleBedMaximumReductionDesc>
+  <NSIF_DoubleBedMaximumReduction>双人床最多减少容量：{0}</NSIF_DoubleBedMaximumReduction>
+  <NSIF_DoubleBedMaximumReductionDesc>双人冰箱会使容量减半，但实际减少量不会超过此数值。设为 0 时，双人床不会占用容量。</NSIF_DoubleBedMaximumReductionDesc>
+  <NSIF_AllowSleeping>这就是床！</NSIF_AllowSleeping>
+  <NSIF_AllowSleepingDesc>允许涅瓦莲将这台冰箱作为床使用。</NSIF_AllowSleepingDesc>
+  <NSIF_MasterSwitchDisabled>Mod 设置中的冰箱睡眠总开关已关闭。</NSIF_MasterSwitchDisabled>
+  <NSIF_OnlyNivarianColonists>只有殖民者涅瓦莲可以睡在这里。</NSIF_OnlyNivarianColonists>
+  <NSIF_InteractionMood>启用存取互动心情</NSIF_InteractionMood>
+  <NSIF_InteractionMoodDesc>冰箱中有涅瓦莲睡觉时，存取物品会影响睡眠者与存取者的心情。</NSIF_InteractionMoodDesc>
+  <NSIF_SleepMood>启用冰箱睡眠心情</NSIF_SleepMood>
+  <NSIF_SleepMoodDesc>涅瓦莲在冰箱里头睡觉时，会根据冰箱空间大小获得额外心情。</NSIF_SleepMoodDesc>
+  <NSIF_SettingsPageGeneral>基础</NSIF_SettingsPageGeneral>
+  <NSIF_SettingsPageMood>心情</NSIF_SettingsPageMood>
+  <NSIF_ResetDefaults>恢复全部默认设置</NSIF_ResetDefaults>
+</LanguageData>
