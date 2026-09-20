@@ -4,6 +4,8 @@
   <NSIF_SettingsCategory>涅瓦莲当然可以！睡冰箱！</NSIF_SettingsCategory>
   <NSIF_MasterSwitch>启用冰箱睡眠</NSIF_MasterSwitch>
   <NSIF_MasterSwitchDesc>控制全部冰箱的床位总开关。</NSIF_MasterSwitchDesc>
+  <NSIF_AllowUfGarbageBin>允许联合轻工垃圾桶作为冰箱</NSIF_AllowUfGarbageBin>
+  <NSIF_AllowUfGarbageBinDesc>允许联合轻工的垃圾桶被当作冰箱床使用。关闭后会隐藏睡眠开关，并停用床位、容量与恢复效果。这个选项其实是因为保持强烈反对让涅睡垃圾桶，所以才加上的额外判定</NSIF_AllowUfGarbageBinDesc>
   <NSIF_IcyCoreRecovery>启用冰核恢复</NSIF_IcyCoreRecovery>
   <NSIF_IcyCoreRecoveryDesc>涅瓦莲在通电冰箱的床位上休息时，会快速恢复冰核。</NSIF_IcyCoreRecoveryDesc>
   <NSIF_IcecreamTailRecoveryBoost>加速冰淇淋尾巴恢复</NSIF_IcecreamTailRecoveryBoost>
@@ -25,5 +27,18 @@
   <NSIF_SleepMoodDesc>涅瓦莲在冰箱里头睡觉时，会根据冰箱空间大小获得额外心情。</NSIF_SleepMoodDesc>
   <NSIF_SettingsPageGeneral>基础</NSIF_SettingsPageGeneral>
   <NSIF_SettingsPageMood>心情</NSIF_SettingsPageMood>
+  <NSIF_SettingsPageDebug>Debug</NSIF_SettingsPageDebug>
+  <NSIF_DebugLogging>启用 Debug 日志</NSIF_DebugLogging>
+  <NSIF_DebugLoggingDesc>记录容器 Def 的首次缓存判断、判断结果、命中理由与冰箱缓存变化。</NSIF_DebugLoggingDesc>
+  <NSIF_DebugNotice>除错提示</NSIF_DebugNotice>
+  <NSIF_DebugNoticeDesc>下次进入殖民地时显示一次冰箱缓存快速除错说明；显示后会自动关闭。</NSIF_DebugNoticeDesc>
+  <NSIF_DebugNoticeLetterLabel>涅瓦莲可以睡冰箱待除错</NSIF_DebugNoticeLetterLabel>
+  <NSIF_DebugNoticeLetterText>由于涅瓦莲当然可以！睡！冰！箱！已经更新了~我们修改了冰箱的判断逻辑。从一开始的加载游戏时，统一做一次扫描；改为每次建造新的容器时，判断是否为冰箱，并进行缓存。故你可能出现冰箱床丢失、冰箱没有被判定为床的问题。&#10;&#10;你可以通过打开本模组的mod选项，在调试选项卡中，找到“快速除错”，点击后，就可以一键快速修复，并为当前殖民地地图的所有容器进行一次缓存~&#10;&#10;注意！该选项可能并不一定能有效~若你点了之后，仍然有冰箱没能被注册成功，可以第一时间来找我反馈，我会尽快修复。</NSIF_DebugNoticeLetterText>
+  <NSIF_VerboseCacheLogging>记录每次缓存访问</NSIF_VerboseCacheLogging>
+  <NSIF_VerboseCacheLoggingDesc>额外记录每次正面或负面缓存命中。可能产生大量日志。</NSIF_VerboseCacheLoggingDesc>
+  <NSIF_QuickRepair>快速除错</NSIF_QuickRepair>
+  <NSIF_QuickRepairDesc>扫描当前地图中的全部存储容器，缓存其 Def，并立即为遗漏的冰箱实例补充组件。</NSIF_QuickRepairDesc>
+  <NSIF_QuickRepairUnavailable>进入一张地图后才能执行快速修复。</NSIF_QuickRepairUnavailable>
+  <NSIF_QuickRepairResult>快速修复完成：扫描 {0} 个容器，新判断 {1} 个 Def，识别 {2} 台冰箱，修复 {3} 个实例，失败 {4} 个。</NSIF_QuickRepairResult>
   <NSIF_ResetDefaults>恢复全部默认设置</NSIF_ResetDefaults>
 </LanguageData>

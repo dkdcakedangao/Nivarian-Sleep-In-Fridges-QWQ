@@ -4,82 +4,145 @@ using System.Reflection;
 using RimWorld;
 using Verse;
 
-// 冰箱列表检测和输出
+// 正负缓存、日志输出，以及神秘的冰箱判定（依旧代码写到哪里，就放在哪里）
 namespace NivarianSleepInFridges
 {
-    [StaticConstructorOnStartup]
-    internal static class FridgeDefBootstrap
+    internal sealed class FridgeDefCacheEntry
     {
-        private static readonly HashSet<ThingDef> FridgeDefs = new HashSet<ThingDef>();
+        internal readonly bool IsFridge;
+        internal readonly string Reason;
 
-        static FridgeDefBootstrap()
+        internal FridgeDefCacheEntry(bool isFridge, string reason)
         {
-            List<ThingDef> defs = DefDatabase<ThingDef>.AllDefsListForReading;
-            for (int i = 0; i < defs.Count; i++)
-            {
-                ThingDef def = defs[i];
-                if (!FridgeDefUtility.IsFridgeDef(def))
-                {
-                    continue;
-                }
-
-                FridgeDefs.Add(def);
-                if (def.comps == null)
-                {
-                    def.comps = new List<CompProperties>();
-                }
-
-                bool alreadyInjected = false;
-                for (int j = 0; j < def.comps.Count; j++)
-                {
-                    CompProperties props = def.comps[j];
-                    if (props != null && props.compClass == typeof(CompFridgeSleep))
-                    {
-                        alreadyInjected = true;
-                        break;
-                    }
-                }
-
-                if (!alreadyInjected)
-                {
-                    def.comps.Add(new CompProperties_FridgeSleep());
-                }
-            }
-
-            List<string> detectedNames = new List<string>();
-            foreach (ThingDef fridgeDef in FridgeDefs)
-            {
-                detectedNames.Add(fridgeDef.defName);
-            }
-
-            detectedNames.Sort(StringComparer.Ordinal);
-            Log.Message(
-                "[Nivarian Sleep In Fridges] Detected "
-                + FridgeDefs.Count
-                + " refrigerator definition(s): "
-                + string.Join(", ", detectedNames.ToArray()));
+            IsFridge = isFridge;
+            Reason = reason;
         }
-
     }
 
-    // 石山核心
-    // 传说中的冰箱检测系统！匠心巨著！
-    // 只要是目标温度低于10°C，同时是容器/单纯的def包含冰箱的名儿
-    // 这就是冰箱
-    // 什么叫联合重工的保温垃圾桶也是冰箱？！
+    internal static class FridgeDefRegistry
+    {
+        private static readonly Dictionary<ThingDef, FridgeDefCacheEntry> ProcessedDefs =
+            new Dictionary<ThingDef, FridgeDefCacheEntry>();
+        private static readonly HashSet<ThingDef> FridgeDefs = new HashSet<ThingDef>();
+
+        internal static FridgeDefCacheEntry EnsureProcessed(
+            ThingDef def,
+            string source,
+            out bool newlyProcessed)
+        {
+            newlyProcessed = false;
+            if (def == null)
+            {
+                return new FridgeDefCacheEntry(false, "missing ThingDef");
+            }
+
+            FridgeDefCacheEntry cached;
+            if (ProcessedDefs.TryGetValue(def, out cached))
+            {
+                FridgeDebugLog.CacheAccess(
+                    "Cache hit from " + source + ": " + def.defName
+                    + " => " + (cached.IsFridge ? "fridge" : "not a fridge")
+                    + " (" + cached.Reason + ").");
+                return cached;
+            }
+
+            string reason;
+            bool isFridge = FridgeDefUtility.IsFridgeDef(def, out reason);
+            cached = new FridgeDefCacheEntry(isFridge, reason);
+            ProcessedDefs.Add(def, cached);
+            newlyProcessed = true;
+
+            FridgeDebugLog.Message(
+                "Cached Def from " + source + ": " + def.defName
+                + " => " + (isFridge ? "fridge" : "not a fridge")
+                + " (" + reason + ").");
+
+            if (!isFridge)
+            {
+                return cached;
+            }
+
+            bool componentInjected = EnsureCompProperties(def);
+            FridgeDefs.Add(def);
+            FridgeDebugLog.Message(
+                "Fridge cache contains " + def.defName
+                + "; count=" + FridgeDefs.Count
+                + "; component=" + (componentInjected ? "injected" : "already present") + ".");
+            return cached;
+        }
+
+        internal static List<ThingDef> FridgeDefsSnapshot()
+        {
+            return new List<ThingDef>(FridgeDefs);
+        }
+
+        private static bool EnsureCompProperties(ThingDef def)
+        {
+            if (def.comps == null)
+            {
+                def.comps = new List<CompProperties>();
+            }
+
+            for (int i = 0; i < def.comps.Count; i++)
+            {
+                CompProperties props = def.comps[i];
+                if (props != null && props.compClass == typeof(CompFridgeSleep))
+                {
+                    return false;
+                }
+            }
+
+            CompProperties_FridgeSleep fridgeSleep = new CompProperties_FridgeSleep();
+            fridgeSleep.ResolveReferences(def);
+            def.comps.Add(fridgeSleep);
+            return true;
+        }
+    }
+
+    internal static class FridgeDebugLog
+    {
+        private const string Prefix = "[Nivarian Sleep In Fridges][Debug] ";
+
+        internal static void Message(string message)
+        {
+            SleepInFridgesSettings settings = SleepInFridgesMod.Settings;
+            if (settings != null && settings.DebugLoggingEnabled)
+            {
+                Log.Message(Prefix + message);
+            }
+        }
+
+        internal static void CacheAccess(string message)
+        {
+            SleepInFridgesSettings settings = SleepInFridgesMod.Settings;
+            if (settings != null && settings.DebugLoggingEnabled && settings.VerboseCacheLoggingEnabled)
+            {
+                Log.Message(Prefix + message);
+            }
+        }
+    }
+
     internal static class FridgeDefUtility
     {
         private const float MaximumRefrigerationTarget = 10f;
 
-        internal static bool IsFridgeDef(ThingDef def)
+        internal static bool IsFridgeDef(ThingDef def, out string reason)
         {
-            if (def == null || def.thingClass == null || !typeof(Building_Storage).IsAssignableFrom(def.thingClass))
+            if (def == null)
             {
+                reason = "missing ThingDef";
+                return false;
+            }
+
+            if (def.thingClass == null || !typeof(Building_Storage).IsAssignableFrom(def.thingClass))
+            {
+                reason = "not a Building_Storage";
                 return false;
             }
 
             if (TypeNameSignalsRefrigeration(def.thingClass))
             {
+                reason = "building class name: " + TypeName(def.thingClass);
                 return true;
             }
 
@@ -96,60 +159,64 @@ namespace NivarianSleepInFridges
                     CompProperties_TempControl tempControl = props as CompProperties_TempControl;
                     if (tempControl != null && tempControl.defaultTargetTemperature <= MaximumRefrigerationTarget)
                     {
+                        reason = "temperature target: " + tempControl.defaultTargetTemperature;
                         return true;
                     }
 
-                    if (TypeNameSignalsRefrigeration(props.GetType()) || TypeNameSignalsRefrigeration(props.compClass))
+                    if (TypeNameSignalsRefrigeration(props.GetType()))
                     {
+                        reason = "component properties class name: " + TypeName(props.GetType());
+                        return true;
+                    }
+
+                    if (TypeNameSignalsRefrigeration(props.compClass))
+                    {
+                        reason = "component class name: " + TypeName(props.compClass);
                         return true;
                     }
                 }
             }
 
-            return HasCoolingExtension(def);
+            return HasCoolingExtension(def, out reason);
         }
 
-        private static bool HasCoolingExtension(ThingDef def)
+        private static bool HasCoolingExtension(ThingDef def, out string reason)
         {
-            if (def.modExtensions == null)
+            if (def.modExtensions != null)
             {
-                return false;
-            }
-
-            for (int i = 0; i < def.modExtensions.Count; i++)
-            {
-                DefModExtension extension = def.modExtensions[i];
-                if (extension == null)
+                for (int i = 0; i < def.modExtensions.Count; i++)
                 {
-                    continue;
-                }
-
-                try
-                {
-                    object temperature = ReadMember(extension, "temperature");
-                    if (temperature == null)
+                    DefModExtension extension = def.modExtensions[i];
+                    if (extension == null)
                     {
                         continue;
                     }
 
-                    object coolingOffset = ReadMember(temperature, "coolingOffset");
-                    if (coolingOffset is float && (float)coolingOffset > 0f)
+                    try
                     {
-                        return true;
+                        object temperature = ReadMember(extension, "temperature");
+                        if (temperature == null)
+                        {
+                            continue;
+                        }
+
+                        object coolingOffset = ReadMember(temperature, "coolingOffset");
+                        if (coolingOffset is float && (float)coolingOffset > 0f)
+                        {
+                            reason = "cooling extension: " + TypeName(extension.GetType());
+                            return true;
+                        }
                     }
-                }
-                
-                // 除错
-                catch (Exception exception)
-                {
-                    Log.Warning(
-                        "[Nivarian Sleep In Fridges] Could not inspect temperature extension on "
-                        + def.defName
-                        + ": "
-                        + exception.GetType().Name);
+                    catch (Exception exception)
+                    {
+                        Log.Warning(
+                            "[Nivarian Sleep In Fridges] Could not inspect temperature extension on "
+                            + def.defName + ": " + exception.GetType().Name);
+                    }
                 }
             }
 
+            reason = "no refrigeration signal";
             return false;
         }
 
@@ -173,9 +240,14 @@ namespace NivarianSleepInFridges
                 return false;
             }
 
-            string name = type.FullName ?? type.Name;
+            string name = TypeName(type);
             return name.IndexOf("fridge", StringComparison.OrdinalIgnoreCase) >= 0
                 || name.IndexOf("refrigerator", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static string TypeName(Type type)
+        {
+            return type.FullName ?? type.Name;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace NivarianSleepInFridges
     internal static class FridgeSleepUtility
     {
         internal const string NivarianRaceDefName = "NivarianRace_Pawn";
+        internal const string UfGarbageBinDefName = "UFLI_Garbagebin_AS";
 
         internal static bool Enabled
         {
@@ -23,6 +24,17 @@ namespace NivarianSleepInFridges
                 && pawn.def.defName == NivarianRaceDefName;
         }
 
+        internal static bool IsFridgeAllowed(ThingDef def)
+        {
+            if (def == null || def.defName != UfGarbageBinDefName)
+            {
+                return true;
+            }
+
+            SleepInFridgesSettings settings = SleepInFridgesMod.Settings;
+            return settings == null || settings.AllowUfGarbageBin;
+        }
+
         internal static void RefreshAllMaps()
         {
             if (Current.ProgramState != ProgramState.Playing)
@@ -30,22 +42,22 @@ namespace NivarianSleepInFridges
                 return;
             }
 
+            List<ThingDef> fridgeDefs = FridgeDefRegistry.FridgeDefsSnapshot();
             List<Map> maps = Find.Maps;
             for (int mapIndex = 0; mapIndex < maps.Count; mapIndex++)
             {
-                List<Thing> things = new List<Thing>(maps[mapIndex].listerThings.AllThings);
-                for (int thingIndex = 0; thingIndex < things.Count; thingIndex++)
+                Map map = maps[mapIndex];
+                for (int defIndex = 0; defIndex < fridgeDefs.Count; defIndex++)
                 {
-                    ThingWithComps thing = things[thingIndex] as ThingWithComps;
-                    if (thing == null)
+                    List<Thing> things = map.listerThings.ThingsOfDef(fridgeDefs[defIndex]);
+                    for (int thingIndex = 0; thingIndex < things.Count; thingIndex++)
                     {
-                        continue;
-                    }
-
-                    CompFridgeSleep comp = thing.GetComp<CompFridgeSleep>();
-                    if (comp != null)
-                    {
-                        comp.RefreshBedProxy();
+                        ThingWithComps thing = things[thingIndex] as ThingWithComps;
+                        CompFridgeSleep comp = thing == null ? null : thing.GetComp<CompFridgeSleep>();
+                        if (comp != null)
+                        {
+                            comp.RefreshBedProxy();
+                        }
                     }
                 }
             }

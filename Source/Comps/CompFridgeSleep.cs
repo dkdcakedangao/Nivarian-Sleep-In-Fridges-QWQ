@@ -29,6 +29,7 @@ namespace NivarianSleepInFridges
             {
                 return allowSleeping
                     && FridgeSleepUtility.Enabled
+                    && FridgeSleepUtility.IsFridgeAllowed(parent.def)
                     && parent.Spawned
                     && parent.Faction == Faction.OfPlayer;
             }
@@ -90,7 +91,7 @@ namespace NivarianSleepInFridges
         // 图标
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            if (parent.Faction != Faction.OfPlayer)
+            if (parent.Faction != Faction.OfPlayer || !FridgeSleepUtility.IsFridgeAllowed(parent.def))
             {
                 yield break;
             }

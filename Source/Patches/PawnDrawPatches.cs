@@ -16,7 +16,6 @@ namespace NivarianSleepInFridges
     internal static class Patch_PawnRenderTree_Draw
     {
         private const string NivarianTailPath = "Nivarian/Race/Tails/NivarianTails";
-        private const string UfGarbageBinDefName = "UFLI_Garbagebin_AS";
         private const float BelowFridgeOffset = 0.001f;
 
         private static void Prefix(
@@ -86,7 +85,8 @@ namespace NivarianSleepInFridges
             return proxy != null
                 && proxy.ParentFridge != null
                 && proxy.ParentFridge.Spawned
-                && (proxy.HidesSleeper || proxy.ParentFridge.def.defName == UfGarbageBinDefName);
+                && (proxy.HidesSleeper
+                    || proxy.ParentFridge.def.defName == FridgeSleepUtility.UfGarbageBinDefName);
         }
 
         private static bool IsNivarianTail(PawnRenderNode node)

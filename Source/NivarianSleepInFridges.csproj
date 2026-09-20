@@ -25,11 +25,14 @@
     <Compile Include="Core\FridgeBedLayout.cs" />
     <Compile Include="Core\FridgeCapacityUtility.cs" />
     <Compile Include="Core\FridgeDefBootstrap.cs" />
+    <Compile Include="Core\FridgeDebugNoticeComponent.cs" />
     <Compile Include="Core\FridgeIcyCoreUtility.cs" />
     <Compile Include="Core\IcecreamTailCompatibility.cs" />
     <Compile Include="Core\FridgeSleepUtility.cs" />
     <Compile Include="Core\FridgeMoodUtility.cs" />
+    <Compile Include="Core\FridgeRepairUtility.cs" />
     <Compile Include="Core\SleepInFridgesMod.cs" />
+    <Compile Include="Patches\BuildingStorageLifecyclePatches.cs" />
     <Compile Include="Patches\GenSpawnPatches.cs" />
     <Compile Include="Patches\PawnDrawPatches.cs" />
     <Compile Include="Patches\RestUtilityPatches.cs" />

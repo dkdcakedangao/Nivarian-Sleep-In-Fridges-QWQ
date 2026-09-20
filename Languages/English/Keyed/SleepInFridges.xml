@@ -4,6 +4,8 @@
   <NSIF_SettingsCategory>Nivarian Sleep In Fridges</NSIF_SettingsCategory>
   <NSIF_MasterSwitch>Enable refrigerator sleeping</NSIF_MasterSwitch>
   <NSIF_MasterSwitchDesc>Master switch for all refrigerator beds. Per-refrigerator choices are preserved while disabled.</NSIF_MasterSwitchDesc>
+  <NSIF_AllowUfGarbageBin>Allow UF Light Industries Furniture garbage bins as refrigerators</NSIF_AllowUfGarbageBin>
+  <NSIF_AllowUfGarbageBinDesc>Allow UF Light Industries Furniture garbage bins to function as refrigerator beds. Disabling this hides their sleep command and disables their bed, capacity, and recovery effects.</NSIF_AllowUfGarbageBinDesc>
   <NSIF_IcyCoreRecovery>Enable Icy Core recovery</NSIF_IcyCoreRecovery>
   <NSIF_IcyCoreRecoveryDesc>Nivarians resting in a powered refrigerator bed recover Icy Core at the base rate of a Nivarian bed.</NSIF_IcyCoreRecoveryDesc>
   <NSIF_IcecreamTailRecoveryBoost>Accelerate Icecream Tail recovery</NSIF_IcecreamTailRecoveryBoost>
@@ -25,5 +27,18 @@
   <NSIF_SleepMoodDesc>Nivarians sleeping in a refrigerator bed gain an additional thought based on its available space.</NSIF_SleepMoodDesc>
   <NSIF_SettingsPageGeneral>General</NSIF_SettingsPageGeneral>
   <NSIF_SettingsPageMood>Thoughts</NSIF_SettingsPageMood>
+  <NSIF_SettingsPageDebug>Debug</NSIF_SettingsPageDebug>
+  <NSIF_DebugLogging>Enable debug logging</NSIF_DebugLogging>
+  <NSIF_DebugLoggingDesc>Log first-time container Def checks, results, matching reasons, and refrigerator cache changes.</NSIF_DebugLoggingDesc>
+  <NSIF_DebugNotice>Debug notice</NSIF_DebugNotice>
+  <NSIF_DebugNoticeDesc>Show the refrigerator cache quick-debug notice once when you next enter a colony. It disables itself after being shown.</NSIF_DebugNoticeDesc>
+  <NSIF_DebugNoticeLetterLabel>Nivarian refrigerator beds may need debugging</NSIF_DebugNoticeLetterLabel>
+  <NSIF_DebugNoticeLetterText>Nivarians Can Sleep! In! Refrigerators! has been updated, and its refrigerator detection logic has changed. Instead of scanning everything once when the game loads, the mod now checks each newly built storage container, determines whether it is a refrigerator, and caches the result. Because of this change, some refrigerator beds may disappear or fail to be recognized.&#10;&#10;Open this mod's settings, go to the Debug tab, and click “Quick debug”. This performs a one-click repair and caches every storage container on the current colony map.&#10;&#10;Please note that this option may not fix every case. If a refrigerator still cannot be registered afterward, please report it to me and I will fix it as soon as possible.</NSIF_DebugNoticeLetterText>
+  <NSIF_VerboseCacheLogging>Log every cache access</NSIF_VerboseCacheLogging>
+  <NSIF_VerboseCacheLoggingDesc>Also log every positive or negative cache hit. This may produce a large amount of log output.</NSIF_VerboseCacheLoggingDesc>
+  <NSIF_QuickRepair>Quick debug</NSIF_QuickRepair>
+  <NSIF_QuickRepairDesc>Scan every storage container on the current map, cache its Def, and immediately attach missing components to refrigerator instances.</NSIF_QuickRepairDesc>
+  <NSIF_QuickRepairUnavailable>Enter a map before running quick repair.</NSIF_QuickRepairUnavailable>
+  <NSIF_QuickRepairResult>Quick repair complete: scanned {0} containers, checked {1} new Defs, found {2} refrigerators, repaired {3} instances, and encountered {4} failures.</NSIF_QuickRepairResult>
   <NSIF_ResetDefaults>Reset all settings to defaults</NSIF_ResetDefaults>
 </LanguageData>

@@ -1,6 +1,7 @@
 using System.Reflection;
 using HarmonyLib;
 using Nivarian.Helper;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -13,15 +14,23 @@ namespace NivarianSleepInFridges
         private const float SectionWidth = 160f;
         private const float SectionGap = 12f;
         private const float HeaderHeight = 36f;
-        private static readonly string[] SectionLabels = { "NSIF_SettingsPageGeneral", "NSIF_SettingsPageMood" };
+        private static readonly string[] SectionLabels =
+        {
+            "NSIF_SettingsPageGeneral",
+            "NSIF_SettingsPageMood",
+            "NSIF_SettingsPageDebug"
+        };
 
         private int settingsPage;
         private Vector2 scrollPosition;
+        private bool pendingCapacityRefresh;
 
+        internal static SleepInFridgesMod Instance { get; private set; }
         public static SleepInFridgesSettings Settings { get; private set; }
 
         public SleepInFridgesMod(ModContentPack content) : base(content)
         {
+            Instance = this;
             Settings = GetSettings<SleepInFridgesSettings>();
             Harmony harmony = new Harmony(HarmonyId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
@@ -36,6 +45,16 @@ namespace NivarianSleepInFridges
                 && LanguageDatabase.activeLanguage.folderName.StartsWith("ChineseSimplified")
                 ? "冰龙可以睡！冰！箱！"
                 : "Nivarian Sleep In Fridges QWQ";
+        }
+
+        public override void WriteSettings()
+        {
+            base.WriteSettings();
+            if (pendingCapacityRefresh)
+            {
+                pendingCapacityRefresh = false;
+                FridgeSleepUtility.RefreshAllMaps();
+            }
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -65,6 +84,7 @@ namespace NivarianSleepInFridges
             listing.Begin(contentRect);
 
             bool oldValue = Settings.Enabled;
+            bool oldAllowUfGarbageBinValue = Settings.AllowUfGarbageBin;
             bool oldIcyCoreRecoveryValue = Settings.IcyCoreRecoveryEnabled;
             bool oldIcecreamTailRecoveryBoostValue = Settings.IcecreamTailRecoveryBoostEnabled;
             float oldIcecreamTailRecoveryMultiplier = Settings.IcecreamTailRecoveryMultiplier;
@@ -73,6 +93,9 @@ namespace NivarianSleepInFridges
             int oldDoubleBedMaximumReduction = Settings.DoubleBedMaximumReduction;
             bool oldSleepMoodValue = Settings.SleepMoodEnabled;
             bool oldInteractionMoodValue = Settings.InteractionMoodEnabled;
+            bool oldDebugLoggingValue = Settings.DebugLoggingEnabled;
+            bool oldVerboseCacheLoggingValue = Settings.VerboseCacheLoggingEnabled;
+            bool oldDebugNoticeValue = Settings.DebugNoticeEnabled;
             bool reset = false;
             if (settingsPage == 0)
             {
@@ -80,6 +103,10 @@ namespace NivarianSleepInFridges
                     "NSIF_MasterSwitch".Translate(),
                     ref Settings.Enabled,
                     "NSIF_MasterSwitchDesc".Translate());
+                listing.CheckboxLabeled(
+                    "NSIF_AllowUfGarbageBin".Translate(),
+                    ref Settings.AllowUfGarbageBin,
+                    "NSIF_AllowUfGarbageBinDesc".Translate());
                 listing.CheckboxLabeled(
                     "NSIF_IcyCoreRecovery".Translate(),
                     ref Settings.IcyCoreRecoveryEnabled,
@@ -128,7 +155,7 @@ namespace NivarianSleepInFridges
                 listing.Gap(8f);
                 reset = Widgets.ButtonText(listing.GetRect(32f), "NSIF_ResetDefaults".Translate());
             }
-            else
+            else if (settingsPage == 1)
             {
                 listing.CheckboxLabeled(
                     "NSIF_SleepMood".Translate(),
@@ -139,6 +166,52 @@ namespace NivarianSleepInFridges
                     ref Settings.InteractionMoodEnabled,
                     "NSIF_InteractionMoodDesc".Translate());
             }
+            else
+            {
+                listing.CheckboxLabeled(
+                    "NSIF_DebugLogging".Translate(),
+                    ref Settings.DebugLoggingEnabled,
+                    "NSIF_DebugLoggingDesc".Translate());
+                listing.CheckboxLabeled(
+                    "NSIF_DebugNotice".Translate(),
+                    ref Settings.DebugNoticeEnabled,
+                    "NSIF_DebugNoticeDesc".Translate());
+                if (Settings.DebugLoggingEnabled)
+                {
+                    listing.CheckboxLabeled(
+                        "NSIF_VerboseCacheLogging".Translate(),
+                        ref Settings.VerboseCacheLoggingEnabled,
+                        "NSIF_VerboseCacheLoggingDesc".Translate());
+                }
+
+                listing.Gap(12f);
+                Rect repairButtonRect = listing.GetRect(32f);
+                bool canRepair = Current.ProgramState == ProgramState.Playing && Find.CurrentMap != null;
+                if (Widgets.ButtonText(
+                    repairButtonRect,
+                    "NSIF_QuickRepair".Translate(),
+                    true,
+                    true,
+                    canRepair))
+                {
+                    FridgeRepairReport report = FridgeRepairUtility.RepairCurrentMap();
+                    Messages.Message(
+                        "NSIF_QuickRepairResult".Translate(
+                            report.ScannedStorages,
+                            report.NewlyProcessedDefs,
+                            report.FridgeStorages,
+                            report.RepairedInstances,
+                            report.Failures),
+                        MessageTypeDefOf.TaskCompletion,
+                        false);
+                }
+
+                TooltipHandler.TipRegion(
+                    repairButtonRect,
+                    canRepair
+                        ? "NSIF_QuickRepairDesc".Translate()
+                        : "NSIF_QuickRepairUnavailable".Translate());
+            }
 
             listing.End();
             Widgets.EndScrollView();
@@ -148,25 +221,42 @@ namespace NivarianSleepInFridges
                 Settings.ResetToDefaults();
             }
 
-            if (reset
+            bool capacitySliderChanged = oldSingleBedMaximumReduction != Settings.SingleBedMaximumReduction
+                || oldDoubleBedMaximumReduction != Settings.DoubleBedMaximumReduction;
+            bool immediateCapacityRefresh = reset
                 || oldValue != Settings.Enabled
-                || oldIcyCoreRecoveryValue != Settings.IcyCoreRecoveryEnabled
+                || oldAllowUfGarbageBinValue != Settings.AllowUfGarbageBin
+                || oldCapacityReductionValue != Settings.CapacityReductionEnabled;
+            bool otherSettingChanged = oldIcyCoreRecoveryValue != Settings.IcyCoreRecoveryEnabled
                 || oldIcecreamTailRecoveryBoostValue != Settings.IcecreamTailRecoveryBoostEnabled
                 || !Mathf.Approximately(oldIcecreamTailRecoveryMultiplier, Settings.IcecreamTailRecoveryMultiplier)
-                || oldCapacityReductionValue != Settings.CapacityReductionEnabled
-                || oldSingleBedMaximumReduction != Settings.SingleBedMaximumReduction
-                || oldDoubleBedMaximumReduction != Settings.DoubleBedMaximumReduction
                 || oldSleepMoodValue != Settings.SleepMoodEnabled
-                || oldInteractionMoodValue != Settings.InteractionMoodEnabled)
+                || oldInteractionMoodValue != Settings.InteractionMoodEnabled
+                || oldDebugLoggingValue != Settings.DebugLoggingEnabled
+                || oldVerboseCacheLoggingValue != Settings.VerboseCacheLoggingEnabled
+                || oldDebugNoticeValue != Settings.DebugNoticeEnabled;
+
+            if (immediateCapacityRefresh)
             {
+                pendingCapacityRefresh = false;
                 WriteSettings();
-                if (reset
-                    || oldValue != Settings.Enabled
-                    || oldCapacityReductionValue != Settings.CapacityReductionEnabled
-                    || oldSingleBedMaximumReduction != Settings.SingleBedMaximumReduction
-                    || oldDoubleBedMaximumReduction != Settings.DoubleBedMaximumReduction)
+                FridgeSleepUtility.RefreshAllMaps();
+            }
+            else
+            {
+                if (capacitySliderChanged)
                 {
-                    FridgeSleepUtility.RefreshAllMaps();
+                    pendingCapacityRefresh = true;
+                }
+
+                if (otherSettingChanged)
+                {
+                    WriteSettings();
+                }
+
+                if (pendingCapacityRefresh && GUIUtility.hotControl == 0)
+                {
+                    WriteSettings();
                 }
             }
         }
@@ -200,7 +290,12 @@ namespace NivarianSleepInFridges
 
         private float SettingsContentHeight()
         {
-            return settingsPage == 0 ? 380f : 100f;
+            if (settingsPage == 0)
+            {
+                return 410f;
+            }
+
+            return settingsPage == 1 ? 100f : 200f;
         }
     }
 
@@ -210,6 +305,7 @@ namespace NivarianSleepInFridges
     public sealed class SleepInFridgesSettings : ModSettings
     {
         public bool Enabled = true;
+        public bool AllowUfGarbageBin = true;
         public bool IcyCoreRecoveryEnabled = true;
         public bool IcecreamTailRecoveryBoostEnabled = true;
         public float IcecreamTailRecoveryMultiplier = 2f;
@@ -218,10 +314,14 @@ namespace NivarianSleepInFridges
         public int DoubleBedMaximumReduction = 20;
         public bool SleepMoodEnabled = true;
         public bool InteractionMoodEnabled = true;
+        public bool DebugLoggingEnabled;
+        public bool VerboseCacheLoggingEnabled;
+        public bool DebugNoticeEnabled = true;
 
         public void ResetToDefaults()
         {
             Enabled = true;
+            AllowUfGarbageBin = true;
             IcyCoreRecoveryEnabled = true;
             IcecreamTailRecoveryBoostEnabled = true;
             IcecreamTailRecoveryMultiplier = 2f;
@@ -230,11 +330,15 @@ namespace NivarianSleepInFridges
             DoubleBedMaximumReduction = 20;
             SleepMoodEnabled = true;
             InteractionMoodEnabled = true;
+            DebugLoggingEnabled = false;
+            VerboseCacheLoggingEnabled = false;
+            DebugNoticeEnabled = true;
         }
 
         public override void ExposeData()
         {
             Scribe_Values.Look(ref Enabled, "enabled", true);
+            Scribe_Values.Look(ref AllowUfGarbageBin, "allowUfGarbageBin", true);
             Scribe_Values.Look(ref IcyCoreRecoveryEnabled, "icyCoreRecoveryEnabled", true);
             Scribe_Values.Look(ref IcecreamTailRecoveryBoostEnabled, "icecreamTailRecoveryBoostEnabled", true);
             Scribe_Values.Look(ref IcecreamTailRecoveryMultiplier, "icecreamTailRecoveryMultiplier", 2f);
@@ -243,6 +347,9 @@ namespace NivarianSleepInFridges
             Scribe_Values.Look(ref DoubleBedMaximumReduction, "doubleBedMaximumReduction", 20);
             Scribe_Values.Look(ref SleepMoodEnabled, "sleepMoodEnabled", true);
             Scribe_Values.Look(ref InteractionMoodEnabled, "interactionMoodEnabled", true);
+            Scribe_Values.Look(ref DebugLoggingEnabled, "debugLoggingEnabled", false);
+            Scribe_Values.Look(ref VerboseCacheLoggingEnabled, "verboseCacheLoggingEnabled", false);
+            Scribe_Values.Look(ref DebugNoticeEnabled, "debugNoticeEnabled", true);
             base.ExposeData();
         }
     }
