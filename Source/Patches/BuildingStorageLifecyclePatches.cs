@@ -2,7 +2,7 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 
-// 新补丁喵~判断冰箱的新入口，现在是InitializeComps，不再是之前那个可能存在的启动遍历了~
+// 新补丁喵~判断冰箱的新入口，现在是InitializeComps，不再是之前那个可能存在问题的启动遍历了~
 namespace NivarianSleepInFridges
 {
     [HarmonyPatch(typeof(Building_Storage), "PostMake")]
