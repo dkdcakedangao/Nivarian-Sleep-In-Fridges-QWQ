@@ -36,6 +36,7 @@
     <Compile Include="Patches\GenSpawnPatches.cs" />
     <Compile Include="Patches\PawnDrawPatches.cs" />
     <Compile Include="Patches\RestUtilityPatches.cs" />
+    <Compile Include="Patches\RoomRolePatches.cs" />
     <Compile Include="Patches\StorageCapacityPatches.cs" />
     <Compile Include="Patches\StorageInteractionPatches.cs" />
     <GameReference Include="$(RimWorldManagedDir)\Assembly-CSharp.dll" />

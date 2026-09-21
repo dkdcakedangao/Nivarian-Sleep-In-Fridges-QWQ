@@ -69,4 +69,14 @@ namespace NivarianSleepInFridges
             return true;
         }
     }
+
+    // 在原版添加记忆之前拦截
+    [HarmonyPatch(typeof(Pawn), "CheckForDisturbedSleep")]
+    internal static class Patch_Pawn_CheckForDisturbedSleep
+    {
+        private static bool Prefix(Pawn __instance)
+        {
+            return __instance == null || !(__instance.CurrentBed() is Building_FridgeBedProxy);
+        }
+    }
 }

@@ -11,7 +11,11 @@
     <neverMultiSelect>true</neverMultiSelect>
     <designationCategory IsNull="True"/>
     <drawGUIOverlay>false</drawGUIOverlay>
+    <!-- 给床设置成1银，这下就不会被判定成地铺了~ -->
     <tickerType>Rare</tickerType>
+    <costList>
+      <Silver>1</Silver>
+    </costList>
     <statBases>
       <Comfort>1.0</Comfort>
       <BedRestEffectiveness>1.4</BedRestEffectiveness>
@@ -22,6 +26,7 @@
     <building>
       <isEdifice>false</isEdifice>
       <bed_canBeMedical>true</bed_canBeMedical>
+      <bed_countsForBedroomOrBarracks>false</bed_countsForBedroomOrBarracks>
     </building>
     <comps Inherit="False">
       <li Class="CompProperties_AssignableToPawn">
