@@ -27,11 +27,21 @@
   <NSIF_SleepMoodDesc>涅瓦莲在冰箱里头睡觉时，会根据冰箱空间大小获得额外心情。</NSIF_SleepMoodDesc>
   <NSIF_SettingsPageGeneral>基础</NSIF_SettingsPageGeneral>
   <NSIF_SettingsPageMood>心情</NSIF_SettingsPageMood>
+  <NSIF_SettingsPageSnacking>偷吃</NSIF_SettingsPageSnacking>
+  <NSIF_Snacking>启用偷吃</NSIF_Snacking>
+  <NSIF_SnackingDesc>开启后，你家冰龙饿的时候，就会偷吃冰箱里头的食物~和原版一样，会选择最好吃的、最想吃的食物（怎么这么贪吃！）。阈值可以在下面设置</NSIF_SnackingDesc>
+  <NSIF_SnackingThreshold>偷吃饱食度阈值：{0}%</NSIF_SnackingThreshold>
+  <NSIF_SnackingThresholdDesc>你家涅瓦莲的饥饿度低于该数值时，就会开始偷偷的尝试偷吃了。</NSIF_SnackingThresholdDesc>
+  <NSIF_SnackingMinimumNutrition>偷吃食物营养下限：{0}</NSIF_SnackingMinimumNutrition>
+  <NSIF_SnackingMinimumNutritionDesc>你家涅瓦莲不会偷吃营养值比这个阈值还低的食物。不好吃！吃不饱！</NSIF_SnackingMinimumNutritionDesc>
+  <NSIF_SnackingMessage>冰箱里的 {0} 消失了！肯定不是 {1} 偷吃的喵~</NSIF_SnackingMessage>
   <NSIF_SettingsPageDebug>Debug</NSIF_SettingsPageDebug>
   <NSIF_DebugLogging>启用 Debug 日志</NSIF_DebugLogging>
   <NSIF_DebugLoggingDesc>记录容器 Def 的首次缓存判断、判断结果、命中理由与冰箱缓存变化。</NSIF_DebugLoggingDesc>
   <NSIF_DebugNotice>除错提示</NSIF_DebugNotice>
   <NSIF_DebugNoticeDesc>下次进入殖民地时显示一次冰箱缓存快速除错说明；显示后会自动关闭。</NSIF_DebugNoticeDesc>
+  <NSIF_AllowSelectingFridgeNest>允许选中冰箱小窝</NSIF_AllowSelectingFridgeNest>
+  <NSIF_AllowSelectingFridgeNestDesc>让你可以选中冰箱小窝，只做调试用~</NSIF_AllowSelectingFridgeNestDesc>
   <NSIF_DebugNoticeLetterLabel>涅瓦莲可以睡冰箱待除错</NSIF_DebugNoticeLetterLabel>
   <NSIF_DebugNoticeLetterText>由于涅瓦莲当然可以！睡！冰！箱！已经更新了~我们修改了冰箱的判断逻辑。从一开始的加载游戏时，统一做一次扫描；改为每次建造新的容器时，判断是否为冰箱，并进行缓存。故你可能出现冰箱床丢失、冰箱没有被判定为床的问题。&#10;&#10;你可以通过打开本模组的mod选项，在调试选项卡中，找到“快速除错”，点击后，就可以一键快速修复，并为当前殖民地地图的所有容器进行一次缓存~&#10;&#10;注意！该选项可能并不一定能有效~若你点了之后，仍然有冰箱没能被注册成功，可以第一时间来找我反馈，我会尽快修复。</NSIF_DebugNoticeLetterText>
   <NSIF_VerboseCacheLogging>记录每次缓存访问</NSIF_VerboseCacheLogging>

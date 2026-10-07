@@ -8,6 +8,8 @@ namespace NivarianSleepInFridges
     public sealed class Building_FridgeBedProxy : Building_Bed
     {
         public ThingWithComps ParentFridge;
+        // 偷吃！
+        internal FridgeSnackingState[] SnackingStates;
 
         public bool IsActive
         {
@@ -51,8 +53,26 @@ namespace NivarianSleepInFridges
         public override void TickRare()
         {
             base.TickRare();
+            // 优化，现在空床不会再进入调度了
+            bool occupied = false;
+            for (int slot = 0; slot < SleepingSlotsCount; slot++)
+            {
+                if (GetCurOccupant(slot) != null)
+                {
+                    occupied = true;
+                    break;
+                }
+            }
+
+            if (!occupied)
+            {
+                SnackingStates = null;
+                return;
+            }
+
             FridgeMoodUtility.RefreshSpaceThoughts(this);
             FridgeIcyCoreUtility.RecoverOccupants(this);
+            FridgeSnackingUtility.TrySnackOccupants(this);
         }
 
         private void RemoveIfOrphaned()

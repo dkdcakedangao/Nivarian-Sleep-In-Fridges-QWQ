@@ -25,6 +25,10 @@
     </statBases>
     <building>
       <isEdifice>false</isEdifice>
+      <!-- 小窝由冰箱组件管理，禁止玩家拆除，也不会显示攻击移除提示 -->
+      <!-- 现在这个是纯除错用的~如果你的神秘模组导致你可以拆除冰箱床，记得反馈！ -->
+      <deconstructible>false</deconstructible>
+      <draftAttackNonDeconstructable>false</draftAttackNonDeconstructable>
       <bed_canBeMedical>true</bed_canBeMedical>
       <bed_countsForBedroomOrBarracks>false</bed_countsForBedroomOrBarracks>
     </building>

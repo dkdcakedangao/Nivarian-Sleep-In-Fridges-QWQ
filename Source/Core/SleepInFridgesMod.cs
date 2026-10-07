@@ -18,6 +18,7 @@ namespace NivarianSleepInFridges
         {
             "NSIF_SettingsPageGeneral",
             "NSIF_SettingsPageMood",
+            "NSIF_SettingsPageSnacking",
             "NSIF_SettingsPageDebug"
         };
 
@@ -32,6 +33,7 @@ namespace NivarianSleepInFridges
         {
             Instance = this;
             Settings = GetSettings<SleepInFridgesSettings>();
+            LongEventHandler.ExecuteWhenFinished(ApplyBedSelectionSetting);
             Harmony harmony = new Harmony(HarmonyId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             AdaptiveStorageBridge.Initialize(harmony);
@@ -93,9 +95,13 @@ namespace NivarianSleepInFridges
             int oldDoubleBedMaximumReduction = Settings.DoubleBedMaximumReduction;
             bool oldSleepMoodValue = Settings.SleepMoodEnabled;
             bool oldInteractionMoodValue = Settings.InteractionMoodEnabled;
+            bool oldSnackingValue = Settings.SnackingEnabled;
+            int oldSnackingThreshold = Settings.SnackingThresholdPercent;
+            float oldSnackingMinimumNutrition = Settings.SnackingMinimumNutrition;
             bool oldDebugLoggingValue = Settings.DebugLoggingEnabled;
             bool oldVerboseCacheLoggingValue = Settings.VerboseCacheLoggingEnabled;
             bool oldDebugNoticeValue = Settings.DebugNoticeEnabled;
+            bool oldAllowSelectingFridgeNestValue = Settings.AllowSelectingFridgeNest;
             bool reset = false;
             if (settingsPage == 0)
             {
@@ -166,6 +172,28 @@ namespace NivarianSleepInFridges
                     ref Settings.InteractionMoodEnabled,
                     "NSIF_InteractionMoodDesc".Translate());
             }
+            else if (settingsPage == 2)
+            {
+                listing.CheckboxLabeled(
+                    "NSIF_Snacking".Translate(),
+                    ref Settings.SnackingEnabled,
+                    "NSIF_SnackingDesc".Translate());
+                if (Settings.SnackingEnabled)
+                {
+                    listing.Label("NSIF_SnackingThreshold".Translate(Settings.SnackingThresholdPercent));
+                    Rect sliderRect = listing.GetRect(24f);
+                    Settings.SnackingThresholdPercent = Mathf.RoundToInt(Widgets.HorizontalSlider(
+                        sliderRect, Settings.SnackingThresholdPercent, 0f, 100f) / 5f) * 5;
+                    TooltipHandler.TipRegion(sliderRect, "NSIF_SnackingThresholdDesc".Translate());
+
+                    listing.Label("NSIF_SnackingMinimumNutrition".Translate(
+                        Settings.SnackingMinimumNutrition.ToString("0.00")));
+                    Rect nutritionSliderRect = listing.GetRect(24f);
+                    Settings.SnackingMinimumNutrition = Mathf.RoundToInt(Widgets.HorizontalSlider(
+                        nutritionSliderRect, Settings.SnackingMinimumNutrition, 0f, 1f) * 20f) / 20f;
+                    TooltipHandler.TipRegion(nutritionSliderRect, "NSIF_SnackingMinimumNutritionDesc".Translate());
+                }
+            }
             else
             {
                 listing.CheckboxLabeled(
@@ -176,6 +204,10 @@ namespace NivarianSleepInFridges
                     "NSIF_DebugNotice".Translate(),
                     ref Settings.DebugNoticeEnabled,
                     "NSIF_DebugNoticeDesc".Translate());
+                listing.CheckboxLabeled(
+                    "NSIF_AllowSelectingFridgeNest".Translate(),
+                    ref Settings.AllowSelectingFridgeNest,
+                    "NSIF_AllowSelectingFridgeNestDesc".Translate());
                 if (Settings.DebugLoggingEnabled)
                 {
                     listing.CheckboxLabeled(
@@ -221,6 +253,11 @@ namespace NivarianSleepInFridges
                 Settings.ResetToDefaults();
             }
 
+            if (reset || oldAllowSelectingFridgeNestValue != Settings.AllowSelectingFridgeNest)
+            {
+                ApplyBedSelectionSetting();
+            }
+
             bool capacitySliderChanged = oldSingleBedMaximumReduction != Settings.SingleBedMaximumReduction
                 || oldDoubleBedMaximumReduction != Settings.DoubleBedMaximumReduction;
             bool immediateCapacityRefresh = reset
@@ -232,9 +269,13 @@ namespace NivarianSleepInFridges
                 || !Mathf.Approximately(oldIcecreamTailRecoveryMultiplier, Settings.IcecreamTailRecoveryMultiplier)
                 || oldSleepMoodValue != Settings.SleepMoodEnabled
                 || oldInteractionMoodValue != Settings.InteractionMoodEnabled
+                || oldSnackingValue != Settings.SnackingEnabled
+                || oldSnackingThreshold != Settings.SnackingThresholdPercent
+                || !Mathf.Approximately(oldSnackingMinimumNutrition, Settings.SnackingMinimumNutrition)
                 || oldDebugLoggingValue != Settings.DebugLoggingEnabled
                 || oldVerboseCacheLoggingValue != Settings.VerboseCacheLoggingEnabled
-                || oldDebugNoticeValue != Settings.DebugNoticeEnabled;
+                || oldDebugNoticeValue != Settings.DebugNoticeEnabled
+                || oldAllowSelectingFridgeNestValue != Settings.AllowSelectingFridgeNest;
 
             if (immediateCapacityRefresh)
             {
@@ -257,6 +298,26 @@ namespace NivarianSleepInFridges
                 if (pendingCapacityRefresh && GUIUtility.hotControl == 0)
                 {
                     WriteSettings();
+                }
+            }
+        }
+
+        private static void ApplyBedSelectionSetting()
+        {
+            // 可选择小窝建筑的相关除错~孩子们！debug来咯~
+            NSIF_DefOf.NSIF_FridgeBedProxySingleCell.selectable = Settings.AllowSelectingFridgeNest;
+            NSIF_DefOf.NSIF_FridgeBedProxySingle.selectable = Settings.AllowSelectingFridgeNest;
+            NSIF_DefOf.NSIF_FridgeBedProxyDouble.selectable = Settings.AllowSelectingFridgeNest;
+
+            if (!Settings.AllowSelectingFridgeNest && Current.ProgramState == ProgramState.Playing)
+            {
+                var selected = Find.Selector.SelectedObjects;
+                for (int i = selected.Count - 1; i >= 0; i--)
+                {
+                    if (selected[i] is Building_FridgeBedProxy)
+                    {
+                        Find.Selector.Deselect(selected[i]);
+                    }
                 }
             }
         }
@@ -295,7 +356,7 @@ namespace NivarianSleepInFridges
                 return 410f;
             }
 
-            return settingsPage == 1 ? 100f : 200f;
+            return settingsPage == 1 ? 100f : settingsPage == 2 ? 180f : 240f;
         }
     }
 
@@ -314,9 +375,13 @@ namespace NivarianSleepInFridges
         public int DoubleBedMaximumReduction = 20;
         public bool SleepMoodEnabled = true;
         public bool InteractionMoodEnabled = true;
+        public bool SnackingEnabled = true;
+        public int SnackingThresholdPercent = 30;
+        public float SnackingMinimumNutrition = 0.3f;
         public bool DebugLoggingEnabled;
         public bool VerboseCacheLoggingEnabled;
         public bool DebugNoticeEnabled = true;
+        public bool AllowSelectingFridgeNest;
 
         public void ResetToDefaults()
         {
@@ -330,9 +395,13 @@ namespace NivarianSleepInFridges
             DoubleBedMaximumReduction = 20;
             SleepMoodEnabled = true;
             InteractionMoodEnabled = true;
+            SnackingEnabled = true;
+            SnackingThresholdPercent = 30;
+            SnackingMinimumNutrition = 0.3f;
             DebugLoggingEnabled = false;
             VerboseCacheLoggingEnabled = false;
             DebugNoticeEnabled = true;
+            AllowSelectingFridgeNest = false;
         }
 
         public override void ExposeData()
@@ -347,9 +416,15 @@ namespace NivarianSleepInFridges
             Scribe_Values.Look(ref DoubleBedMaximumReduction, "doubleBedMaximumReduction", 20);
             Scribe_Values.Look(ref SleepMoodEnabled, "sleepMoodEnabled", true);
             Scribe_Values.Look(ref InteractionMoodEnabled, "interactionMoodEnabled", true);
+            Scribe_Values.Look(ref SnackingEnabled, "snackingEnabled", true);
+            Scribe_Values.Look(ref SnackingThresholdPercent, "snackingThresholdPercent", 30);
+            SnackingThresholdPercent = Mathf.RoundToInt(Mathf.Clamp(SnackingThresholdPercent, 0, 100) / 5f) * 5;
+            Scribe_Values.Look(ref SnackingMinimumNutrition, "snackingMinimumNutrition", 0.3f);
+            SnackingMinimumNutrition = Mathf.RoundToInt(Mathf.Clamp(SnackingMinimumNutrition, 0f, 1f) * 20f) / 20f;
             Scribe_Values.Look(ref DebugLoggingEnabled, "debugLoggingEnabled", false);
             Scribe_Values.Look(ref VerboseCacheLoggingEnabled, "verboseCacheLoggingEnabled", false);
             Scribe_Values.Look(ref DebugNoticeEnabled, "debugNoticeEnabled", true);
+            Scribe_Values.Look(ref AllowSelectingFridgeNest, "allowSelectingFridgeNest", false);
             base.ExposeData();
         }
     }
