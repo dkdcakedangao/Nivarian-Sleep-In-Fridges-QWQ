@@ -20,6 +20,11 @@
   </Target>
 
   <ItemGroup>
+    <Compile Include="Events\FridgeGiftUtility.cs" />
+    <Compile Include="Events\FridgeGiftComponent.cs" />
+    <Compile Include="Events\Thing_FridgeGiftTimer.cs" />
+    <Compile Include="Events\IncidentWorker_FridgeGift.cs" />
+    <Compile Include="Events\Skyfaller_FridgeGift.cs" />
     <Compile Include="Buildings\Building_FridgeBedProxy.cs" />
     <Compile Include="Comps\CompFridgeSleep.cs" />
     <Compile Include="Core\FridgeBedLayout.cs" />
@@ -34,6 +39,7 @@
     <Compile Include="Core\FridgeRepairUtility.cs" />
     <Compile Include="Core\SleepInFridgesMod.cs" />
     <Compile Include="Patches\BuildingStorageLifecyclePatches.cs" />
+    <Compile Include="Patches\FridgeGiftPawnRegistrationPatches.cs" />
     <Compile Include="Patches\GenSpawnPatches.cs" />
     <Compile Include="Patches\PawnComfortPatches.cs" />
     <Compile Include="Patches\PawnDrawPatches.cs" />

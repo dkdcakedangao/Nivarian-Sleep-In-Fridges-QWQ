@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 冰箱贴图的定义，声音的定义，限制器。需要有家具扩展 -->
+<Defs>
+  <ThingDef ParentName="SkyfallerBase" MayRequire="keeptpa.NivarianDraconiture">
+    <defName>NSIF_FridgeGiftIncoming</defName>
+    <label>incoming Nivarian refrigerator</label>
+    <thingClass>NivarianSleepInFridges.Skyfaller_FridgeGift</thingClass>
+    <graphicData>
+      <texPath>Nivarian/Cargo/nivarian_refridge</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutFlying</shaderType>
+      <drawSize>1</drawSize>
+    </graphicData>
+    <skyfaller>
+      <hitRoof>false</hitRoof>
+      <movementType>Decelerate</movementType>
+      <ticksToImpactRange>180~180</ticksToImpactRange>
+      <anticipationSound>DropPod_Fall</anticipationSound>
+      <motesPerCell>0</motesPerCell>
+      <explosionRadius>0</explosionRadius>
+    </skyfaller>
+  </ThingDef>
+</Defs>

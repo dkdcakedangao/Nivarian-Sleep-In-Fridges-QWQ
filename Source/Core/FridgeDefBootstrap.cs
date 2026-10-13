@@ -103,6 +103,15 @@ namespace NivarianSleepInFridges
     {
         private const string Prefix = "[Nivarian Sleep In Fridges][Debug] ";
 
+        internal static bool Enabled
+        {
+            get
+            {
+                SleepInFridgesSettings settings = SleepInFridgesMod.Settings;
+                return settings != null && settings.DebugLoggingEnabled;
+            }
+        }
+
         internal static void Message(string message)
         {
             SleepInFridgesSettings settings = SleepInFridgesMod.Settings;

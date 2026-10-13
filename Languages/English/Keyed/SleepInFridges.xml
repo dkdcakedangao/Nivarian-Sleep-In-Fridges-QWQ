@@ -37,7 +37,7 @@
   <NSIF_SnackingMessage>The {0} in the refrigerator disappeared! Surely {1} didn't sneak a bite!</NSIF_SnackingMessage>
   <NSIF_SettingsPageDebug>Debug</NSIF_SettingsPageDebug>
   <NSIF_DebugLogging>Enable debug logging</NSIF_DebugLogging>
-  <NSIF_DebugLoggingDesc>Log first-time container Def checks, results, matching reasons, and refrigerator cache changes.</NSIF_DebugLoggingDesc>
+  <NSIF_DebugLoggingDesc>Log first-time container Def checks, results, matching reasons, and refrigerator cache changes, plus pawn registration, timers, landing cells, and execution results for the refrigerator drop event.</NSIF_DebugLoggingDesc>
   <NSIF_DebugNotice>Debug notice</NSIF_DebugNotice>
   <NSIF_DebugNoticeDesc>Show the refrigerator cache quick-debug notice once when you next enter a colony. It disables itself after being shown.</NSIF_DebugNoticeDesc>
   <NSIF_AllowSelectingFridgeNest>Allow selecting refrigerator nests</NSIF_AllowSelectingFridgeNest>

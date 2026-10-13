@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 烟雾特效 -->
+<!-- 我其实特别喜欢这个一圈圈烟雾的特效效果，但是感觉直接做成一团烟也不错 -->
+<Defs>
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>NSIF_FridgeGiftSmoke</defName>
+    <graphicData>
+      <texPath>Things/Mote/Smoke</texPath>
+      <renderInstanced>true</renderInstanced>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <realTime>true</realTime>
+    <fadeInTime>0.5</fadeInTime>
+    <solidTime>7.5</solidTime>
+    <fadeOutTime>2</fadeOutTime>
+    <growthRate>0</growthRate>
+  </FleckDef>
+</Defs>

@@ -37,7 +37,7 @@
   <NSIF_SnackingMessage>冰箱里的 {0} 消失了！肯定不是 {1} 偷吃的喵~</NSIF_SnackingMessage>
   <NSIF_SettingsPageDebug>Debug</NSIF_SettingsPageDebug>
   <NSIF_DebugLogging>启用 Debug 日志</NSIF_DebugLogging>
-  <NSIF_DebugLoggingDesc>记录容器 Def 的首次缓存判断、判断结果、命中理由与冰箱缓存变化。</NSIF_DebugLoggingDesc>
+  <NSIF_DebugLoggingDesc>记录容器 Def 的首次缓存判断、判断结果、命中理由与冰箱缓存变化，以及天降冰箱事件的人物登记、计时、落点和执行结果。</NSIF_DebugLoggingDesc>
   <NSIF_DebugNotice>除错提示</NSIF_DebugNotice>
   <NSIF_DebugNoticeDesc>下次进入殖民地时显示一次冰箱缓存快速除错说明；显示后会自动关闭。</NSIF_DebugNoticeDesc>
   <NSIF_AllowSelectingFridgeNest>允许选中冰箱小窝</NSIF_AllowSelectingFridgeNest>
