@@ -1,4 +1,6 @@
+#if !RIMWORLD_17
 using Nivarian;
+#endif
 using RimWorld;
 using Verse;
 
@@ -10,6 +12,13 @@ namespace NivarianSleepInFridges
     internal static class FridgeIcyCoreUtility
     {
         private const float RecoveryPerRareTick = 0.01f * 250f / 150f;
+#if RIMWORLD_17
+        private static NeedDef icyCoreDef;
+        internal static void Initialize()
+        {
+            icyCoreDef = DefDatabase<NeedDef>.GetNamedSilentFail("Nivarian_IcyCore");
+        }
+#endif
 
         internal static void RecoverOccupants(Building_FridgeBedProxy proxy)
         {
@@ -35,7 +44,11 @@ namespace NivarianSleepInFridges
                     continue;
                 }
 
+#if RIMWORLD_17
+                Need icyCore = icyCoreDef == null ? null : pawn.needs.TryGetNeed(icyCoreDef);
+#else
                 Need_IcyCore icyCore = pawn.needs.TryGetNeed<Need_IcyCore>();
+#endif
                 if (icyCore != null)
                 {
                     icyCore.CurLevel += RecoveryPerRareTick;

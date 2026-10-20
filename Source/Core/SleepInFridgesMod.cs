@@ -1,6 +1,10 @@
 using System.Reflection;
 using HarmonyLib;
+#if RIMWORLD_17
+using NivarianVisualHelper = NivarianSleepInFridges.NivarianHostBridge;
+#else
 using Nivarian.Helper;
+#endif
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -34,6 +38,15 @@ namespace NivarianSleepInFridges
             Instance = this;
             Settings = GetSettings<SleepInFridgesSettings>();
             LongEventHandler.ExecuteWhenFinished(ApplyBedSelectionSetting);
+#if RIMWORLD_17
+            LongEventHandler.ExecuteWhenFinished(delegate
+            {
+                NivarianHostBridge.Initialize();
+                FridgeIcyCoreUtility.Initialize();
+                FridgeBombSoundPatches.Initialize();
+                OrbitalSupportHost.Initialize(content);
+            });
+#endif
             Harmony harmony = new Harmony(HarmonyId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             AdaptiveStorageBridge.Initialize(harmony);

@@ -1,6 +1,11 @@
 /Source/bin/
 /Source/obj/
 /Source/Tests/
+/Source/Dependencies/
+/Source/OrbitalSupport/bin/
+/Source/OrbitalSupport/obj/
+/Source/1.7/bin/
+/Source/1.7/obj/
 /log.txt
 *.user
 *.suo

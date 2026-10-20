@@ -24,7 +24,7 @@ namespace NivarianSleepInFridges
                 if (FridgeDebugLog.Enabled)
                 {
                     string reason = FridgeGiftUtility.RefrigeratorDef == null
-                        ? "缺少 Draconiture 前置或 NivarianRefrigerator 定义"
+                        ? FridgeGiftUtility.MissingRefrigeratorReason
                         : map == null || !map.IsPlayerHome ? "目标不是玩家殖民地"
                         : !FridgeGiftUtility.HasColonist(map) ? "目标地图没有合格涅瓦莲"
                         : "已有冰箱正在下降";

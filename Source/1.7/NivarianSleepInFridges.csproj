@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>NivarianSleepInFridges</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>$(DefineConstants);RIMWORLD_17</DefineConstants>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <DebugType>none</DebugType>
+    <RimWorldDirectory Condition="'$(RimWorldDirectory)' == ''">E:/steam/steamapps/common/RimWorld</RimWorldDirectory>
+    <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == ''">E:/steam/steamapps/workshop/content/294100/2009463077/1.7/Assemblies/0Harmony.dll</HarmonyAssemblyPath>
+    <AlienRaceAssemblyPath Condition="'$(AlienRaceAssemblyPath)' == ''">E:/steam/steamapps/workshop/content/294100/839005762/1.7/Assemblies/AlienRace.dll</AlienRaceAssemblyPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Core/*.cs;../Buildings/*.cs;../Comps/*.cs;../Events/*.cs;../Patches/*.cs;Integration/*.cs" />
+    <Reference Include="Assembly-CSharp" HintPath="$(RimWorldDirectory)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="UnityStubs" HintPath="$(RimWorldDirectory)/UnityStubs.dll" Private="false" />
+    <Reference Include="Waylith" HintPath="$(RimWorldDirectory)/Waylith.dll" Private="false" />
+    <Reference Include="Waylith.UnityCompat" HintPath="$(RimWorldDirectory)/Waylith.UnityCompat.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(HarmonyAssemblyPath)" Private="false" />
+    <Reference Include="AlienRace" HintPath="$(AlienRaceAssemblyPath)" Private="false" />
+  </ItemGroup>
+</Project>

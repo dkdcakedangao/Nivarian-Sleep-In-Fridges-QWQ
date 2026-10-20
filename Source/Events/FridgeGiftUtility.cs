@@ -6,12 +6,22 @@ namespace NivarianSleepInFridges
 {
     internal static class FridgeGiftUtility
     {
+#if RIMWORLD_17
+        internal const string MissingRefrigeratorReason = "本体中缺少可用的 NivarianRefrigerator 定义";
+#else
+        internal const string MissingRefrigeratorReason = "缺少 Draconiture 前置或 NivarianRefrigerator 定义";
+#endif
+
         internal static ThingDef RefrigeratorDef
         {
             get
             {
+#if RIMWORLD_17
+                return DefDatabase<ThingDef>.GetNamedSilentFail("NivarianRefrigerator");
+#else
                 return ModsConfig.IsActive("keeptpa.NivarianDraconiture")
                     ? DefDatabase<ThingDef>.GetNamedSilentFail("NivarianRefrigerator") : null;
+#endif
             }
         }
 

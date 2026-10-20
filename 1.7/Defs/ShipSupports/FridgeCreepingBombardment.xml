@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 所有发射共用此类；普通弹不改外观，冰箱弹在实例创建时替换实体部分。 -->
+  <ThingDef ParentName="NivarianShell">
+    <defName>NSIF_FridgeBombIncoming</defName>
+    <label>fridge barrage shell</label>
+    <!-- 本体基类作为加载载体；适配模块接入成功后才绑定自己的派生类。 -->
+  </ThingDef>
+
+  <Nivarian_Race.Code.Defs.NivarianBombardmentShellDef ParentName="NivarianBombardmentAction_Base">
+    <defName>NSIF_BombardmentAction_Fridge</defName>
+    <label>refrigerator frost shell</label>
+    <explosionDamageDef>Nivarian_Damage_FrostRanged</explosionDamageDef>
+    <explosionRadius>5</explosionRadius>
+    <explosionDamage>15</explosionDamage>
+  </Nivarian_Race.Code.Defs.NivarianBombardmentShellDef>
+
+  <Nivarian_Race.Code.Defs.NivarianBombardmentDef>
+    <defName>NSIF_Bombardment_FridgeCreeping</defName>
+    <label>creeping refrigerator barrage pattern</label>
+    <intervalTicks>60</intervalTicks>
+    <repeatCount>5</repeatCount>
+    <coveringRadius>2.2</coveringRadius>
+    <centerMovingStep>1</centerMovingStep>
+    <skyfallerDef>NSIF_FridgeBombIncoming</skyfallerDef>
+    <BombardmentShells>
+      <li>NivarianBombardmentAction_SweepExplosive</li>
+      <li>NSIF_BombardmentAction_Fridge</li>
+      <li>NivarianBombardmentAction_SweepExplosive</li>
+      <li>NivarianBombardmentAction_Hold</li>
+      <li>NivarianBombardmentAction_SweepExplosive</li>
+      <li>NSIF_BombardmentAction_Fridge</li>
+      <li>NivarianBombardmentAction_SweepExplosive</li>
+      <li>NivarianBombardmentAction_Hold</li>
+    </BombardmentShells>
+  </Nivarian_Race.Code.Defs.NivarianBombardmentDef>
+
+  <Nivarian_Race.Code.Defs.NivarianMotherShipRequestDef>
+    <defName>NSIF_Request_FridgeCreepingBombardment</defName>
+    <label>creeping refrigerator barrage</label>
+    <description>First, choose the bombardment's starting point, then select its direction of advance.&#10;The mothership will alternate between conventional high-explosive shells and refrigerator shells in a creeping barrage. Drive enemies back, trap those too slow to escape, and let the high-explosive shells finish the job with area damage.&#10;Refrigerator shells cover a wider area. Although they deal less damage, they can freeze enemies and restrict their movement. They also leave ice spikes that deal continuous damage. These spikes can hurt allies too, so watch your firing direction and maintain fire discipline!&#10;Why are the shells refrigerators? Because we can use refrigerators as shells, of course!</description>
+    <voiceLineDef>Nivarian_VoiceLine_orbit_barrages</voiceLineDef>
+    <requiredResearch>Nivarian_AdvancedOrbitalDelivery</requiredResearch>
+    <!-- Worker 由适配模块绑定；接入失败时保持不可用，不提前解析适配类型。 -->
+    <bombardmentPattern>NSIF_Bombardment_FridgeCreeping</bombardmentPattern>
+    <bombardmentFlareDelayTicks>90</bombardmentFlareDelayTicks>
+    <requestLevel>3</requestLevel>
+    <closeMotherShipWindowOnClick>true</closeMotherShipWindowOnClick>
+    <coolDownTicks>112500</coolDownTicks>
+    <costs>
+      <li><currency>PowerCoin</currency><count>356</count></li>
+      <li><currency>VolatileReactive</currency><count>325</count></li>
+    </costs>
+    <techRing>
+      <radius>5</radius>
+    </techRing>
+    <ringColor>(0.85, 0.55, 0.25)</ringColor>
+    <tab>NivarianMSSR_Defending</tab>
+    <uiIconPath>NSIF/Orbital/FridgeBarrage</uiIconPath>
+    <projectionDwellTicks>2600</projectionDwellTicks>
+  </Nivarian_Race.Code.Defs.NivarianMotherShipRequestDef>
+</Defs>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 临时定义，待优化 -->
+<Defs>
+  <ThingDef>
+    <defName>NSIF_FridgeGiftTimer</defName>
+    <thingClass>NivarianSleepInFridges.Thing_FridgeGiftTimer</thingClass>
+    <category>Ethereal</category>
+    <tickerType>Rare</tickerType>
+    <drawerType>None</drawerType>
+    <selectable>false</selectable>
+  </ThingDef>
+</Defs>

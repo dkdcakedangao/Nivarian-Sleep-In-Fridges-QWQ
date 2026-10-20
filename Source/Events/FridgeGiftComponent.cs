@@ -125,7 +125,8 @@ namespace NivarianSleepInFridges
                 waitingForColonist = true;
                 StopTimer();
                 if (FridgeDebugLog.Enabled)
-                    FridgeDebugLog.Message("[FridgeGift][执行结果] success=false reason=缺少 Draconiture 前置或 NivarianRefrigerator 定义；休眠等待，不开始新计时。");
+                    FridgeDebugLog.Message("[FridgeGift][执行结果] success=false reason="
+                        + FridgeGiftUtility.MissingRefrigeratorReason + "；休眠等待，不开始新计时。");
                 return;
             }
 
