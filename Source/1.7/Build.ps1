@@ -61,8 +61,15 @@ $adapterRelease = Join-Path $modRoot '1.7/OrbitalSupport'
 [void](New-Item -ItemType Directory -Force -Path $release, $adapterRelease)
 Copy-Item -LiteralPath $main -Destination $release -Force
 Copy-Item -LiteralPath $adapter -Destination $adapterRelease -Force
-# 1.7 不再加载 1.6 DLL；复制共用 Def，保持旧版本发布内容不变。
-Copy-Item -LiteralPath (Join-Path $modRoot '1.6/Defs') -Destination (Join-Path $modRoot '1.7') -Recurse -Force
+# 复制共用 Def；下落体按版本独立维护，避免恢复 1.6 的家具扩展前置。
+$sharedDefs = Join-Path $modRoot '1.6/Defs'
+foreach ($file in Get-ChildItem -LiteralPath $sharedDefs -Recurse -File) {
+    $relative = [IO.Path]::GetRelativePath($sharedDefs, $file.FullName).Replace('\', '/')
+    if ($relative -eq 'ThingDefs/FridgeGiftIncoming.xml') { continue }
+    $destination = Join-Path (Join-Path $modRoot '1.7/Defs') $relative
+    [void](New-Item -ItemType Directory -Force -Path (Split-Path $destination -Parent))
+    Copy-Item -LiteralPath $file.FullName -Destination $destination -Force
+}
 
 if ($Deploy) {
     $target = [IO.Path]::GetFullPath((Join-Path $RimWorldDirectory 'Mods/Nivarian-Sleep-In-Fridges-QWQ'))

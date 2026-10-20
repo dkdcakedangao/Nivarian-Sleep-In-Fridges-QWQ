@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 冰箱贴图的定义，声音的定义，限制器。需要有家具扩展 -->
+<!-- 1.7 使用本体内置冰箱，无需独立家具扩展。 -->
 <Defs>
-  <ThingDef ParentName="SkyfallerBase" MayRequire="keeptpa.NivarianDraconiture">
+  <ThingDef ParentName="SkyfallerBase">
     <defName>NSIF_FridgeGiftIncoming</defName>
     <label>incoming Nivarian refrigerator</label>
     <thingClass>NivarianSleepInFridges.Skyfaller_FridgeGift</thingClass>
